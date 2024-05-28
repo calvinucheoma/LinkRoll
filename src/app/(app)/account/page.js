@@ -23,9 +23,10 @@ const AccountPage = async ({ searchParams }) => {
 
   const page = await Page.findOne({ owner: session?.user?.email });
 
-  const leanPage = cloneDeep(page.toJSON());
+  const leanPage = cloneDeep(page);
 
   leanPage._id = leanPage._id.toString();
+  leanPage.createdAt = leanPage.createdAt.toString();
 
   if (page) {
     return (
