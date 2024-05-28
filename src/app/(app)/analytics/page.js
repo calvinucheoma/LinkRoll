@@ -42,7 +42,7 @@ const AnalyticsPage = async () => {
   });
 
   if (!views) {
-    redirect('/account');
+    return;
   }
 
   const groupedViews = views
