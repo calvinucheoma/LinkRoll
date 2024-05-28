@@ -41,6 +41,10 @@ const AnalyticsPage = async () => {
     type: 'view',
   });
 
+  if (!views) {
+    redirect('/account');
+  }
+
   const groupedViews = views
     ? await Event.aggregate([
         {
