@@ -64,6 +64,11 @@ const AnalyticsPage = async () => {
     type: 'click',
   });
 
+  const views = await Event.find({
+    page: page.uri,
+    type: 'view',
+  });
+
   return (
     <div>
       <SectionBox>
@@ -75,12 +80,18 @@ const AnalyticsPage = async () => {
             {date}: {count}
           </div>
         ))} */}
-        <Chart
-          data={groupedViews?.map((object) => ({
-            date: object._id,
-            views: object.count,
-          }))}
-        />
+        {views ? (
+          <Chart
+            data={groupedViews?.map((object) => ({
+              date: object._id,
+              views: object.count,
+            }))}
+          />
+        ) : (
+          <h3 className="text-2xl text-center h-full flex items-center justify-center">
+            You do not have any views yet...
+          </h3>
+        )}
       </SectionBox>
 
       <SectionBox>
