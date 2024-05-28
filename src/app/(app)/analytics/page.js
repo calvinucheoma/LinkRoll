@@ -22,6 +22,10 @@ const AnalyticsPage = async () => {
 
   const page = await Page.findOne({ owner: session?.user?.email });
 
+  if (!page) {
+    redirect('/account');
+  }
+
   // const viewsCount = await Event.countDocuments({
   //   type: 'view',
   //   uri: page?.uri,
