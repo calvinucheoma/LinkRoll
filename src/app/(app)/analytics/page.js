@@ -36,37 +36,39 @@ const AnalyticsPage = async () => {
   //   uri: page?.links?.map((link) => link.url),
   // });
 
-  const groupedViews = await Event.aggregate([
-    {
-      $match: {
-        type: 'view',
-        uri: page?.uri,
+  const views = await Event.find({
+    page: page.uri,
+    type: 'view',
+  });
+
+  if (views) {
+    const groupedViews = await Event.aggregate([
+      {
+        $match: {
+          type: 'view',
+          uri: page?.uri,
+        },
       },
-    },
-    {
-      $group: {
-        _id: {
-          $dateToString: {
-            date: '$createdAt',
-            format: '%Y-%m-%d',
+      {
+        $group: {
+          _id: {
+            $dateToString: {
+              date: '$createdAt',
+              format: '%Y-%m-%d',
+            },
+          },
+          count: {
+            $count: {},
           },
         },
-        count: {
-          $count: {},
-        },
       },
-    },
-    { $sort: { _id: 1 } },
-  ]); // we use minus '-' sign to indicate descending order
+      { $sort: { _id: 1 } },
+    ]); // we use minus '-' sign to indicate descending order
+  }
 
   const clicks = await Event.find({
     page: page.uri,
     type: 'click',
-  });
-
-  const views = await Event.find({
-    page: page.uri,
-    type: 'view',
   });
 
   return (
