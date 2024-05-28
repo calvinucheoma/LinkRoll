@@ -23,17 +23,17 @@ const AccountPage = async ({ searchParams }) => {
 
   const page = await Page.findOne({ owner: session?.user?.email });
 
-  const leanPage = cloneDeep(page);
+  // const leanPage = cloneDeep(page);
 
-  leanPage._id = leanPage._id.toString();
-  leanPage.createdAt = leanPage.createdAt.toString();
+  // leanPage._id = leanPage._id.toString();
+  // leanPage.createdAt = leanPage.createdAt.toString();
 
   if (page) {
     return (
       <>
-        <PageSettingsForm page={leanPage} user={session?.user} />
-        <PageButtonsForm page={leanPage} user={session?.user} />
-        <PageLinksForm page={leanPage} user={session?.user} />
+        <PageSettingsForm page={page} user={session?.user} />
+        <PageButtonsForm page={page} user={session?.user} />
+        <PageLinksForm page={page} user={session?.user} />
         {/* 
           When trying to pass a non-plain object (an object with methods or special properties like MongoDB's ObjectId)
           from a Server Component to a Client Component in Next.js, we get a warning in the console. 
