@@ -54,8 +54,18 @@ function buttonLink(key, value) {
   return value;
 }
 
+/*
+
+To handle spaces in URLs properly, you need to decode the URI component when retrieving the username from the 
+URL parameters. The issue arises because URLs encode spaces as `%20`, so when querying the database, you need to 
+decode the encoded URI back to its original form. We do this using the 'decodeURIComponent' which is a standard 
+JavaScript function that is available by default in both Node.js and browser environments. It is used to decode a 
+URI component that was previously created by encodeURIComponent or by a URL encoding process.
+
+*/
+
 const UserPage = async ({ params }) => {
-  const uri = params.uri;
+  const uri = decodeURIComponent(params.uri);
 
   await mongoose.connect(process.env.MONGODB_URI);
 
